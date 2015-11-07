@@ -6,11 +6,12 @@ var http = require('http');
 var transit = ProtoBuf.protoFromFile(path.join(__dirname, 'gtfs/nyct-subway.proto')).build('transit_realtime')
 var feedUrl = config.feedUrl;
 
-function FeedWorker() {
+function FeedWorker(timeout) {
   this.isUpdating = false;
   this.stops = {}
   this.lines = {}
   this.update();
+  this.setUpdate(timeout);
 }
 
 FeedWorker.prototype.getLines = function() {
@@ -29,9 +30,11 @@ FeedWorker.prototype.setUpdate = function(seconds) {
 
 FeedWorker.prototype.update = function() {
   if(!this.isUpdating) {
-    this.isUpdating = true;
+    var self = this;
+    self.isUpdating = true;
+    console.log("Updating feed"); // TODO: chalk this in some color
     http.get(feedUrl, function(res) {
-      var dataAry = []
+      var dataAry = [];
       res.on("data", function(d) {
         dataAry.push(d);
       });
@@ -57,10 +60,10 @@ FeedWorker.prototype.update = function() {
             });
           }
         });
-        // console.log(require('util').inspect(this.lines, false, null));
-        this.stops = stops;
-        this.lines = lines;
-        this.isUpdating = false;
+        self.stops = stops;
+        self.lines = lines;
+        self.isUpdating = false;
+        console.log("Finished updating feed"); // TODO: chalk this
       });
     });
   }

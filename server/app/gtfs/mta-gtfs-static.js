@@ -1,16 +1,6 @@
 var fs  = require('fs');
-
-module.exports = {
-  // agency: makeObjSync('gtfs/google_transit/agency.txt'),
-  // calendar: makeObjSync('gtfs/google_transit/calendar.txt'),
-  // calendar_dates: makeObjSync('gtfs/google_transit/calendar_dates.txt'),
-  // routes: makeObjSync('gtfs/google_transit/routes.txt'),
-  // shapes: makeObjSync('gtfs/google_transit/shapes.txt'),
-  // stop_times: makeObjSync('gtfs/google_transit/stop_times.txt'),
-  // transfers: makeObjSync('gtfs/google_transit/transfers.txt'),
-  // trips: makeObjSync('gtfs/google_transit/trips.txt'),
-  stops: makeObjSync('gtfs/google_transit/stops.txt')
-}
+var path = require('path');
+var lodash = require('lodash');
 
 function makeObjSync(fileName) {
   var retAry = [];
@@ -55,4 +45,24 @@ function makeObj(fileName) {
     retAry.push(obj);
   });
   return retAry;
+}
+
+
+var allStops = makeObjSync(path.join(__dirname,'google_transit/stops.txt'));
+var parentStops = lodash.filter(allStops, function(stop) {
+  return stop.parent_station == "";
+});
+
+
+
+module.exports = {
+  // agency: makeObjSync('gtfs/google_transit/agency.txt'),
+  // calendar: makeObjSync('gtfs/google_transit/calendar.txt'),
+  // calendar_dates: makeObjSync('gtfs/google_transit/calendar_dates.txt'),
+  // routes: makeObjSync('gtfs/google_transit/routes.txt'),
+  // shapes: makeObjSync('gtfs/google_transit/shapes.txt'),
+  // stop_times: makeObjSync('gtfs/google_transit/stop_times.txt'),
+  // transfers: makeObjSync('gtfs/google_transit/transfers.txt'),
+  // trips: makeObjSync('gtfs/google_transit/trips.txt'),
+  stops: parentStops
 }
