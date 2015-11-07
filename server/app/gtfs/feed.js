@@ -1,9 +1,9 @@
-var config = require("../../config.js");
+var config = require("../../../config.js");
 var path = require("path");
 var ProtoBuf = require('protobufjs');
 var http = require('http');
 
-var transit = ProtoBuf.protoFromFile(path.join(__dirname, 'gtfs/nyct-subway.proto')).build('transit_realtime')
+var transit = ProtoBuf.protoFromFile(path.join(__dirname, 'nyct-subway.proto')).build('transit_realtime')
 var feedUrl = config.feedUrl;
 
 function FeedWorker(timeout) {
