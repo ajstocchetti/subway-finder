@@ -7,10 +7,13 @@ var gtfs = require(path.join(__dirname, '../gtfs'));
 var feed = gtfs.feed;
 
 router.get('/coords', function (req, res) {
-  // var lat = req.body.lat;
-  // var long = req.body.long;
-  res.send(gtfs.find(40.709416,-74.006571));
-  // res.send(feed.stops)
+  var lat = req.body.lat;
+  var long = req.body.long;
+  var data = gtfs.find(req.body.lat, req.body.long);
+  if (data.error){
+    return res.status(400).send(data.err);
+  }
+  res.send(data);
 });
 
 router.get('/', function(req, res) {
