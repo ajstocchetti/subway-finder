@@ -22,11 +22,19 @@
     "gtfs": "^0.3.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
+    "gulp-concat": "^2.6.0",
     "gulp-eslint": "^0.14.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify": "0.0.5",
     "gulp-plumber": "^1.0.1",
+    "gulp-sass": "^2.1.0",
+    "gulp-uglify": "^1.4.2",
     "lodash": "^3.10.1",
     "mongoose": "^4.2.4",
     "protobufjs": "^4.1.2",
     "run-sequence": "^1.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
   }
 }
