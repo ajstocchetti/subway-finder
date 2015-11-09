@@ -32,8 +32,8 @@ FeedWorker.prototype.update = function() {
   if(!this.isUpdating) {
     var self = this;
     self.isUpdating = true;
-    console.log("Updating feed"); // TODO: chalk this in some color
     http.get(feedUrl, function(res) {
+      console.log("Updating feed"); // TODO: chalk this in some color
       var dataAry = [];
       res.on("data", function(d) {
         dataAry.push(d);

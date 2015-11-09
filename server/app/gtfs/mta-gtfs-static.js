@@ -49,10 +49,16 @@ function makeObj(fileName) {
 
 
 var allStops = makeObjSync(path.join(__dirname,'google_transit/stops.txt'));
-var parentStops = lodash.filter(allStops, function(stop) {
+var parentStops = allStops.filter(function(stop) {
   return stop.parent_station == "";
-});
-
+}).map(function(stop) {
+  return {
+    stop_id: stop.stop_id,
+    stop_name: stop.stop_name,
+    stop_lat: stop.stop_lat,
+    stop_lon: stop.stop_lon
+  }
+})
 
 
 module.exports = {

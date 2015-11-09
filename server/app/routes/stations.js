@@ -4,7 +4,7 @@ module.exports = router;
 
 // var geo = require('geolib');
 var path = require('path')
-var stops = require(path.join(__dirname,'../gtfs')).stops;
+var stops = require(path.join(__dirname,'../gtfs')).mta_static.stops;
 
 router.get('/', function (req, res) {
   res.send(stops);

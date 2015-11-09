@@ -10,16 +10,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular": "^1.4.7",
     "babel-core": "^6.1.2",
     "bluebird": "^3.0.5",
     "body-parser": "^1.14.1",
+    "bootstrap": "^3.3.5",
     "chalk": "^1.1.1",
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "geolib": "^2.0.18",
     "gtfs": "^0.3.1",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-eslint": "^0.14.0",
+    "gulp-plumber": "^1.0.1",
     "lodash": "^3.10.1",
     "mongoose": "^4.2.4",
-    "protobufjs": "^4.1.2"
+    "protobufjs": "^4.1.2",
+    "run-sequence": "^1.1.4"
   }
 }

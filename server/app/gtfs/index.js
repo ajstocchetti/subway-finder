@@ -2,7 +2,6 @@ var geo = require('geolib');
 var mta = require('./mta-gtfs-static.js');
 var feed = require('./feed.js');
 
-
 function isFloat(n) {
   return isFinite(n) && n != '';
 }
