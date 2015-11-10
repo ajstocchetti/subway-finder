@@ -3,8 +3,8 @@
 <head>
     <base href="/" />
     <title>Subway Finder</title>
-    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="/style.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- <script src="/lodash/index.js"></script> -->
     <script src="/angular.js"></script>
     <!-- <script src="/bootstrap.js"></script> -->
@@ -14,9 +14,15 @@
     <script src="/js/ng-app.js"></script>
 </head>
 <body ng-app="SubwayFinder">
-  Hello andy
-    <navbar></navbar>
-    <div id="main" ui-view></div>
-    <ajs-test></ajs-test>
+  <div class="container">
+    <!-- <div id="main" ui-view></div> -->
+    <div class="col-sm-12 col-md-4"></div>
+    <div class="col-sm-12 col-md-4">
+      <station-picker></station-picker>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <upcoming-trains></upcoming-trains>
+    </div>
+  </div>
 </body>
 </html>

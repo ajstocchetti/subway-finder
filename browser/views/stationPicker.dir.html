@@ -1,0 +1,4 @@
+<input ng-model="stationFilter"></input>
+<div ng-repeat="station in stations | orderBy: 'stop_name' | filter:stationFilter ">
+  <button class="btn station-btn">{{ station.stop_name}}</button>
+</div>

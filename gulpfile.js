@@ -37,7 +37,7 @@ gulp.task('ng-compile', ['lintJS'],function() {
   .pipe(gulp.dest('./public/js/'))
 });
 
-gulp.task('ng-prod', ['lintJS'],function() {
+gulp.task('ng-prod', ['lintJS'], function() {
   return gulp.src(['./browser/js/*.js', './browser.js/**/*.js'])
   .pipe(concat('ng-app.js'))
   .pipe(babel())
@@ -45,6 +45,14 @@ gulp.task('ng-prod', ['lintJS'],function() {
   .pipe(uglify())
   .pipe(gulp.dest('./public/js/'))
 });
+
+// angular views
+gulp.task('html-views', function() {
+  return gulp.src('./browser/views/*.html')
+  .pipe(plumber())
+  .pipe(gulp.dest('./public/views/'))
+});
+
 
 // CSS
 gulp.task('sass', function () {
@@ -56,7 +64,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('sass-prod', function () {
-  return gulp.src('./browser/scss/*.scss')
+  return gulp.src('./browser/css/*.scss')
     .pipe(concat('style.css'))
     .pipe(sass())
     .pipe(minifyCSS())
@@ -73,9 +81,9 @@ gulp.task('sass-prod', function () {
 
 gulp.task('build', function () {
     if (process.env.NODE_ENV === 'production') {
-        runSeq(['ng-prod', 'sass-prod']);
+        runSeq(['ng-prod', 'sass-prod', 'html-views']);
     } else {
-        runSeq(['ng-compile', 'sass']);
+        runSeq(['ng-compile', 'sass', 'html-views']);
     }
 });
 
@@ -87,9 +95,12 @@ gulp.task('default', function () {
     gulp.watch(['browser/*.js', 'browser/**/*.js'], function() {
       runSeq('ng-compile', 'reload')
     });
-    gulp.watch('browser/scss/**', function () {
+    gulp.watch('browser/css/**', function () {
         runSeq('sass', 'reloadCSS');
     });
+    gulp.watch('browser/views/*.html', function() {
+      runSeq('html-views');
+    })
 
     // gulp.watch('server/**/*.js', ['lintJS']);
 
