@@ -1,4 +1,11 @@
 .station-btn {
   padding: 10px;
   margin: 10px;
+  width: 80%;
+  white-space: normal;
+}
+
+.scroll {
+  max-height: 90vh;
+  overflow-y: auto;
 }
