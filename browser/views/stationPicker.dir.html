@@ -1,4 +1,10 @@
-<input ng-model="stationFilter"></input>
-<div ng-repeat="station in stations | orderBy: 'stop_name' | filter:stationFilter ">
-  <button class="btn station-btn">{{ station.stop_name}}</button>
+<div class="col-xs-12 col-sm-4">
+  <h1>Pick a Station</h1>
+  <div ng-repeat="station in lineData.stops">
+    <button class="btn station-btn">
+      {{ stnIdToName(station.stop_id) }}
+    </button>
+  </div>
 </div>
+
+<ui-view></ui-view>

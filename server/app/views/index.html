@@ -6,17 +6,16 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- <script src="/lodash/index.js"></script> -->
-    <script src="/angular.js"></script>
+    <script src="/angular/angular.js"></script>
     <!-- <script src="/bootstrap.js"></script> -->
-    <!-- <script src="/angular-ui-router/release/angular-ui-router.js"></script> -->
+    <script src="/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- <script src="/angular-bootstrap/ui-bootstrap.js"></script> -->
     <!-- <script src="/angular-bootstrap/ui-bootstrap-tpls.js"></script> -->
     <script src="/js/ng-app.js"></script>
 </head>
 <body ng-app="SubwayFinder">
-  <div class="container">
-    <!-- <div id="main" ui-view></div> -->
-    <upcoming-trains></upcoming-trains>
+  <div class="container" ng-controller="MainCtrl">
+    <line-picker></line-picker>
   </div>
 </body>
 </html>

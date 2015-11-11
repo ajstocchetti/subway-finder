@@ -10,7 +10,7 @@ var feedUrl = config.feedUrl;
 function FeedWorker(timeout) {
   this.isUpdating = false;
   this.stops = {}
-  this.lines = {}
+  this.lines = [];
   this.update();
   this.setUpdate(timeout);
 }
@@ -40,31 +40,37 @@ FeedWorker.prototype.update = function() {
         dataAry.push(d);
       });
       res.on("end", function() {
-        var data = Buffer.concat(dataAry);
-        var feed = transit.FeedMessage.decode(data);
+        try {
+          var data = Buffer.concat(dataAry);
+          var feed = transit.FeedMessage.decode(data);
 
-        var lines = [];
-        var stops = {};
+          var lines = [];
+          var stops = {};
 
-        feed.entity.forEach(function(entity) {
-          if(entity.trip_update) {
-            var line = entity.trip_update.trip.route_id;
-            var dir = entity.trip_update.trip[".nyct_trip_descriptor"].direction;
-            var stu = entity.trip_update.stop_time_update;
-            stu.forEach(function(update) {
-              var stop_id = simpleStation(update.stop_id);
-              if(update.arrival) {
-                var arvl = pbTimeToUnix(update.arrival.time);
-                addToLines(lines,line, dir, stop_id, arvl)
-                addToStation(stops,line, dir, stop_id, arvl)
-              }
-            });
-          }
-        });
-        self.stops = stops;
-        self.lines = lines;
-        self.isUpdating = false;
-        console.log("Finished updating feed"); // TODO: chalk this
+          feed.entity.forEach(function(entity) {
+            if(entity.trip_update) {
+              var line = entity.trip_update.trip.route_id;
+              var dir = entity.trip_update.trip[".nyct_trip_descriptor"].direction;
+              var stu = entity.trip_update.stop_time_update;
+              stu.forEach(function(update) {
+                var stop_id = simpleStation(update.stop_id);
+                if(update.arrival) {
+                  var arvl = pbTimeToUnix(update.arrival.time);
+                  addToLines(lines,line, dir, stop_id, arvl)
+                  addToStation(stops,line, dir, stop_id, arvl)
+                }
+              });
+            }
+          });
+          self.stops = stops;
+          self.lines = lines;
+          self.isUpdating = false;
+          console.log("Finished updating feed"); // TODO: chalk this
+        } catch(err) {
+          self.isUpdating = false;
+          console.log("Feed update failed");
+          console.log(err);
+        }
       });
     });
   }

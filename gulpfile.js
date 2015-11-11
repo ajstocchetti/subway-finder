@@ -32,8 +32,9 @@ gulp.task('lintJS', function () {
 gulp.task('ng-compile', ['lintJS'],function() {
   return gulp.src(['./browser/js/app.js', './browser/js/**/*.js'])
   .pipe(plumber())
+  .pipe(babel()) // babel here to see what file any error is in
   .pipe(concat('ng-app.js'))
-  .pipe(babel())
+  .pipe(babel()) // babel again over the combined file
   .pipe(gulp.dest('./public/js/'))
 });
 

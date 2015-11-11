@@ -17,7 +17,6 @@ router.get('/coords', function (req, res) {
 });
 
 router.get('/', function(req, res) {
-  console.log(feed);
   res.send(feed.stops);
 })
 
