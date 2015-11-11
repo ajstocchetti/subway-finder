@@ -2,6 +2,7 @@ var config = require("../../../config.js");
 var path = require("path");
 var ProtoBuf = require('protobufjs');
 var http = require('http');
+var lodash = require('lodash');
 
 var transit = ProtoBuf.protoFromFile(path.join(__dirname, 'nyct-subway.proto')).build('transit_realtime')
 var feedUrl = config.feedUrl;
@@ -42,7 +43,7 @@ FeedWorker.prototype.update = function() {
         var data = Buffer.concat(dataAry);
         var feed = transit.FeedMessage.decode(data);
 
-        var lines = {};
+        var lines = [];
         var stops = {};
 
         feed.entity.forEach(function(entity) {
@@ -69,14 +70,7 @@ FeedWorker.prototype.update = function() {
   }
 }
 
-
 module.exports = new FeedWorker;
-
-
-
-
-
-
 
 
 function pbTimeToUnix(time) {
@@ -91,8 +85,57 @@ function simpleStation(stop_id) {
   return stop_id.substring(0,3);
 }
 
-
 function addToLines(obj, line, dir, stop, arrival, departure) {
+  var lineIndex = -1;
+  var stopIndex = -1;
+  var dirIndex = -1;
+
+  for(var x=0; x< obj.length; x++) {
+    if(obj[x]["lineName"] == line) {
+      lineIndex = x;
+      break;
+    }
+  }
+  if(lineIndex == -1) {
+    lineIndex = obj.length;
+    obj.push({
+      lineName: line,
+      stops: []
+    });
+  }
+
+  for(var x=0; x < obj[lineIndex]["stops"].length; x++) {
+    if(obj[lineIndex]["stops"][x]["stop_id"] == stop) {
+      stopIndex = x;
+      break;
+    }
+  }
+  if( stopIndex == -1 ) {
+    stopIndex = obj[lineIndex]["stops"].length;
+    obj[lineIndex]["stops"].push({
+      stop_id: stop,
+      direction: []
+    });
+  }
+
+  for(var x=0; x<obj[lineIndex]["stops"][stopIndex]["direction"].length; x++) {
+    if(obj[lineIndex]["stops"][stopIndex]["direction"][x]["direction"] == dir) {
+      dirIndex = x;
+      break;
+    }
+  }
+  if(dirIndex == -1) {
+    dirIndex = obj[lineIndex]["stops"][stopIndex]["direction"].length;
+    obj[lineIndex]["stops"][stopIndex]["direction"].push({
+      direction: dir,
+      times: []
+    })
+  }
+
+  obj[lineIndex]["stops"][stopIndex]["direction"][dirIndex]["times"].push(arrival);
+}
+
+function addToLinesOld(obj, line, dir, stop, arrival, departure) {
   obj[line] = obj[line] || {};
   obj[line][dir] = obj[line][dir] || {};
   obj[line][dir][stop] = obj[line][dir][stop] || [];

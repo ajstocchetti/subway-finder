@@ -1,7 +1,7 @@
-app.factory('FeedFactory', function() {
+app.factory('FeedFactory', function($http) {
   return {
-    lineAll: getLines,
-    stopsAll: getStops
+    getLines: getLines,
+    getStops: getStops
   };
 
   function getLines() {
