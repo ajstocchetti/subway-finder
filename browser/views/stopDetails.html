@@ -3,7 +3,7 @@
     <h2>{{ dirs[dir.direction] }} bound trains:</h2>
     <ul>
       <li ng-repeat="time in dir.times">
-        {{ time }}
+        {{ time*1000 | date : 'mediumTime' }}
       </li>
     </ul>
   </div>
