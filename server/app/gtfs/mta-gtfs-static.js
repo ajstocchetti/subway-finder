@@ -49,7 +49,19 @@ function makeObj(fileName) {
 
 
 var allStops = makeObjSync(path.join(__dirname,'google_transit/stops.txt'));
-var parentStops = allStops.filter(function(stop) {
+
+var parentStops = {};
+allStops.forEach(function(stop) {
+  if(stop.parent_station != "")
+    return;
+  parentStops[stop.stop_id] = {
+    stop_name: stop.stop_name,
+    stop_lat: stop.stop_lat,
+    stop_lon: stop.stop_lon
+  }
+});
+
+var allStopsArr = allStops.filter(function(stop) {
   return stop.parent_station == "";
 }).map(function(stop) {
   return {
@@ -70,5 +82,6 @@ module.exports = {
   // stop_times: makeObjSync('gtfs/google_transit/stop_times.txt'),
   // transfers: makeObjSync('gtfs/google_transit/transfers.txt'),
   // trips: makeObjSync('gtfs/google_transit/trips.txt'),
-  stops: parentStops
+  stops: parentStops,
+  stopsArr: allStopsArr
 }

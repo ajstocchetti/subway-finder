@@ -1,6 +1,6 @@
 <div class="col-xs-12 col-sm-4">
   <h1>Pick a Train</h1>
-  <div ng-repeat="(index, line) in lineFeed">
+  <div ng-repeat="line in lineFeed">
     <button class="btn station-btn" ui-sref="line({lineNum: line.lineName})">
       {{ line.lineName}}
     </button>

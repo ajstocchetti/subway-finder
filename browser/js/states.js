@@ -5,9 +5,7 @@ app.config(function($stateProvider) {
       templateUrl: "/views/stationPicker.dir.html",
       controller: function($scope, lineNum) {
         $scope.lineNum = lineNum;
-        $scope.lineFeed.forEach(function(ld) {
-          if(ld.lineName == lineNum) $scope.lineData=ld;
-        });
+        $scope.lineData = $scope.lineFeed[lineNum];
         $scope.stnIdToName = function(stationId) {
           for(var x=0; x<$scope.stations.length; x++) {
             if($scope.stations[x].stop_id == stationId)

@@ -33,7 +33,7 @@ function findClose(lat, long) {
   if(!( validLat(lat) && validLong(long) )) {
     return { error: true, err: "Invalid coordinates" };
   }
-  return mta.stops.map(function(stop) {
+  return mta.stopsArr.map(function(stop) {
     return {
       stop_id: stop.stop_id,
       stop_name: stop.stop_name,
