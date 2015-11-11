@@ -1,8 +1,8 @@
 <div class="col-xs-12 col-sm-4">
   <h1>Pick a Station</h1>
   <div ng-repeat="station in lineData.stops">
-    <button class="btn station-btn">
-      <!-- {{ stnIdToName(station.stop_id) }} -->
+    <button class="btn station-btn"
+      ui-sref="line.station({lineNum: activeLine, stop_id: station.stop_id})">
       {{ stations[station.stop_id]["stop_name"]}}
     </button>
   </div>

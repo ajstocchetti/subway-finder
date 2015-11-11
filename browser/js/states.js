@@ -4,14 +4,8 @@ app.config(function($stateProvider) {
       url: "/line/:lineNum",
       templateUrl: "/views/stationPicker.dir.html",
       controller: function($scope, lineNum) {
-        $scope.lineNum = lineNum;
+        $scope.activeLine = lineNum;
         $scope.lineData = $scope.lineFeed[lineNum];
-        $scope.stnIdToName = function(stationId) {
-          for(var x=0; x<$scope.stations.length; x++) {
-            if($scope.stations[x].stop_id == stationId)
-              return $scope.stations[x].stop_name;
-          }
-        }
       },
       resolve: {
         lineNum: function($stateParams) {
@@ -21,10 +15,11 @@ app.config(function($stateProvider) {
   })
 
   .state('line.station', {
-    url: "/stop_id",
+    url: "/:stop_id",
     templateUrl: "/views/stopDetails.html",
     controller: function($scope, stop_id) {
-      $scope.ajs = stop_id;
+      $scope.activeStation = stop_id;
+      $scope.stationData = $scope.lineFeed[$scope.activeLine]["stops"][stop_id];
     },
     resolve: {
       stop_id: function($stateParams) {
