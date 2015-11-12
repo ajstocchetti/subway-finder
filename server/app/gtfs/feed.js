@@ -5,7 +5,7 @@ var http = require('http');
 var lodash = require('lodash');
 
 var transit = ProtoBuf.protoFromFile(path.join(__dirname, 'nyct-subway.proto')).build('transit_realtime')
-var feedUrl = config.feedUrl;
+var feedUrl = "http://datamine.mta.info/mta_esi.php?key=" + config.mta_api;
 
 function FeedWorker(timeout) {
   this.isUpdating = false;
@@ -56,6 +56,7 @@ FeedWorker.prototype.update = function() {
                 var stop_id = simpleStation(update.stop_id);
                 if(update.arrival) {
                   var arvl = pbTimeToUnix(update.arrival.time);
+                  // var dptr = pbTimeToUnix(update.departure.time);
                   addToLines(lines,line, dir, stop_id, arvl)
                   addToStation(stops,line, dir, stop_id, arvl)
                 }
