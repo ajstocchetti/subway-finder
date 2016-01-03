@@ -1,11 +1,10 @@
-var config = require("../../../config.js");
 var path = require("path");
 var ProtoBuf = require('protobufjs');
 var http = require('http');
 var lodash = require('lodash');
 
 var transit = ProtoBuf.protoFromFile(path.join(__dirname, 'nyct-subway.proto')).build('transit_realtime')
-var feedUrl = "http://datamine.mta.info/mta_esi.php?key=" + config.mta_api;
+var feedUrl = "http://datamine.mta.info/mta_esi.php?key=" + process.env.MTA_API;
 
 function FeedWorker(timeout) {
   this.isUpdating = false;

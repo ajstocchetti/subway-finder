@@ -12,5 +12,6 @@
 
 */
 
+require('dotenv').load();
 require('babel-core/register');
 require('./main');
